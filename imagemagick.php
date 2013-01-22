@@ -119,7 +119,7 @@ class ImageMagick
 		}
 
 		// Build crop command
-		$this->crop = ' -gravity ' . $gravity . ' -extent ' . $width . 'x' . $height . ' ';
+		$this->crop = ' -gravity ' . $gravity . ' -extent ' . $width . 'x' . $height;
 
 		return $this;
 	}
@@ -135,7 +135,7 @@ class ImageMagick
 	 */
 	public function set_crop_by_coordinates($width, $height, $x_pos, $y_pos)
 	{
-		$this->crop = ' -crop ' . $width . 'x' . $height . '+' . $x_pos . '+' . $y_pos . '';
+		$this->crop = ' -crop ' . $width . 'x' . $height . '+' . $x_pos . '+' . $y_pos;
 		return $this;
 	}
 
@@ -210,9 +210,11 @@ class ImageMagick
 	 */
 	private function command($dest_path)
 	{
-		// Build convert command
-		$command = $this->convert_path . ' ';
-		$command .= $this->file_path;
+		// Convert command
+		$command = $this->convert_path;
+
+		// Source image path
+		$command .= ' ' . $this->file_path;
 
 		// Crop
 		if (!is_null($this->crop))
@@ -223,32 +225,25 @@ class ImageMagick
 		// Resize
 		if (!is_null($this->width) and !is_null($this->height))
 		{
-			$command .= ' -resize ';
-			$command .= $this->width;
-			$command .= 'x';
-			$command .= $this->height;
+			$command .= ' -resize ' . $this->width . 'x' . $this->height;
 		}
 		else if (!is_null($this->width) and is_null($this->height))
 		{
-			$command .= ' -resize ';
-			$command .= $this->width;
+			$command .= ' -resize ' . $this->width;
 		}
 		else if (is_null($this->width) and !is_null($this->height))
 		{
-			$command .= ' -resize ';
-			$command .= 'x';
-			$command .= $this->height;
+			$command .= ' -resize x' . $this->height;
 		}
 
 		// Auto-rotate and flatten image
 		$command .= ' -background white -flatten -auto-orient';
 
-		// Set image quality
-		$command .= ' -quality ';
-		$command .= $this->quality . ' ';
+		// Image quality
+		$command .= ' -quality ' . $this->quality;
 
-		// Set image destination
-		$command .= $dest_path;
+		// Destination path
+		$command .= ' ' . $dest_path;
 
 		// Return command
 		return $command;
