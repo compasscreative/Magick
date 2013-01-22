@@ -12,8 +12,8 @@ namespace Reinink;
 
 use \Exception;
 
-class ImageMagick {
-
+class ImageMagick
+{
 	/**
 	 * The convert command path.
 	 *
@@ -63,7 +63,6 @@ class ImageMagick {
 	 * @param	string	$file_path
 	 * @return	void
 	 */
-
 	public function __construct($convert_path = null, $file_path = null)
 	{
 		$this->convert_path = $convert_path;
