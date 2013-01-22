@@ -1,8 +1,19 @@
-<?php namespace Reinink;
+<?php
+/**
+ * An ultra lightweight ImageMagick wrapper for PHP.
+ *
+ * @package  ImageMagick
+ * @version  1.0
+ * @author   Jonathan Reinink <jonathan@reininks.com>
+ * @link     https://github.com/reinink/ImageMagick
+ */
+
+namespace Reinink;
 
 use \Exception;
 
 class ImageMagick {
+
 	/**
 	 * The convert command path.
 	 *
@@ -52,6 +63,7 @@ class ImageMagick {
 	 * @param	string	$file_path
 	 * @return	void
 	 */
+
 	public function __construct($convert_path = null, $file_path = null)
 	{
 		$this->convert_path = $convert_path;
