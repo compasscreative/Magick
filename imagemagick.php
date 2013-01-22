@@ -10,8 +10,6 @@
 
 namespace Reinink;
 
-use \Exception;
-
 class ImageMagick
 {
 	/**
