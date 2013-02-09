@@ -3,7 +3,7 @@
  * An ultra lightweight ImageMagick wrapper for PHP.
  *
  * @package  ImageMagick
- * @version  1.0
+ * @version  1.1
  * @author   Jonathan Reinink <jonathan@reininks.com>
  * @link     https://github.com/reinink/ImageMagick
  */
@@ -58,13 +58,11 @@ class ImageMagick
 	 * Create a new ImageMagick instance.
 	 *
 	 * @param	string	$convert_path
-	 * @param	string	$file_path
 	 * @return	void
 	 */
-	public function __construct($convert_path = null, $file_path = null)
+	public function __construct($convert_path = 'convert')
 	{
 		$this->convert_path = $convert_path;
-		$this->file_path = $file_path;
 	}
 
 	/**
@@ -213,7 +211,7 @@ class ImageMagick
 		// Convert command
 		$command = $this->convert_path;
 
-		// Source image path
+		// Source path
 		$command .= ' ' . $this->file_path;
 
 		// Crop
@@ -236,7 +234,7 @@ class ImageMagick
 			$command .= ' -resize x' . $this->height;
 		}
 
-		// Auto-rotate and flatten image
+		// Auto-rotate and flatten
 		$command .= ' -background white -flatten -auto-orient';
 
 		// Image quality
