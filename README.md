@@ -17,6 +17,8 @@ $magick = new Magick('/opt/ImageMagick/bin/convert');
 
 ## Example
 
+The following example shows how you can use `Magick` to create five different image sizes, with varying crop ratios, from one original image file.
+
 ```php
 <?php
 
@@ -24,7 +26,7 @@ $magick = new Magick('/opt/ImageMagick/bin/convert');
 	$magick = new Magick();
 
 	// Set the path to the file you want to modify
-	$magick->set_file_path($path);
+	$magick->set_file_path('original.jpg');
 
 	// Create an extra large version
 	// Restricted to a maximum of 1200px high
