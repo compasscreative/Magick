@@ -1,6 +1,10 @@
 Magick
 ======
 
+## What it is
+
+An ultra lightweight ImageMagick wrapper for PHP offering some of the more common uses of the `convert` command, like cropping and resizing.
+
 ## Setup
 
 Most web hosts make the primary ImageMagick command `convert` callable as is. However, if this is different in your environment, simply include the full path in your constructor. For example:
