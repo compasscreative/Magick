@@ -2,15 +2,15 @@
 /**
  * An ultra lightweight ImageMagick wrapper for PHP.
  *
- * @package  ImageMagick
+ * @package  Magick
  * @version  1.1
  * @author   Jonathan Reinink <jonathan@reininks.com>
- * @link     https://github.com/reinink/ImageMagick
+ * @link     https://github.com/reinink/Magick
  */
 
-namespace Reinink;
+namespace Reinink\Magick;
 
-class ImageMagick
+class Magick
 {
 	/**
 	 * The convert command path.
@@ -55,7 +55,7 @@ class ImageMagick
 	private $quality = 90;
 
 	/**
-	 * Create a new ImageMagick instance.
+	 * Create a new Magick instance.
 	 *
 	 * @param	string	$convert_path
 	 * @return	void
@@ -69,7 +69,7 @@ class ImageMagick
 	 * Set the convert command path.
 	 *
 	 * @param	string	$convert_path
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_convert_path($convert_path)
 	{
@@ -81,7 +81,7 @@ class ImageMagick
 	 * Set the source image path.
 	 *
 	 * @param	string	$file_path
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_file_path($file_path)
 	{
@@ -98,7 +98,7 @@ class ImageMagick
 	 *
 	 * @param	int		$width
 	 * @param	string	$gravity
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_crop_by_ratio($ratio, $gravity = 'center')
 	{
@@ -129,7 +129,7 @@ class ImageMagick
 	 * @param	int		$height
 	 * @param	int		$x_pos
 	 * @param	int		$y_pos
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_crop_by_coordinates($width, $height, $x_pos, $y_pos)
 	{
@@ -141,7 +141,7 @@ class ImageMagick
 	 * Set the convert width in pixels.
 	 *
 	 * @param	int		$width
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_width($width)
 	{
@@ -153,7 +153,7 @@ class ImageMagick
 	 * Set the convert height in pixels.
 	 *
 	 * @param	int		$height
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_height($height)
 	{
@@ -165,7 +165,7 @@ class ImageMagick
 	 * Set the convert quality.
 	 *
 	 * @param	int		$quality
-	 * @return	ImageMagick
+	 * @return	Magick
 	 */
 	public function set_quality($quality)
 	{
