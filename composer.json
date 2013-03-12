@@ -1,0 +1,10 @@
+{
+	"name": "reinink/magick",
+	"autoload":
+	{
+		"psr-0":
+		{
+			"Reinink\\Magick\\": "src"
+		}
+	}
+}
