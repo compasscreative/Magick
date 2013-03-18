@@ -3,7 +3,7 @@
  * An ultra lightweight ImageMagick wrapper for PHP.
  *
  * @package  Magick
- * @version  1.1
+ * @version  2.0
  * @author   Jonathan Reinink <jonathan@reininks.com>
  * @link     https://github.com/reinink/Magick
  */
@@ -12,238 +12,235 @@ namespace Reinink\Magick;
 
 class Magick
 {
-	/**
-	 * The convert command path.
-	 *
-	 * @var string
-	 */
-	private $convert_path;
+    /**
+     * The convert command path.
+     *
+     * @var string
+     */
+    private $convert_path;
 
-	/**
-	 * The source image path.
-	 *
-	 * @var string
-	 */
-	private $file_path;
+    /**
+     * The source image path.
+     *
+     * @var string
+     */
+    private $file_path;
 
-	/**
-	 * The convert crop command.
-	 *
-	 * @var int,string
-	 */
-	private $crop;
+    /**
+     * The convert crop command.
+     *
+     * @var int,string
+     */
+    private $crop;
 
-	/**
-	 * The convert width in pixels.
-	 *
-	 * @var int
-	 */
-	private $width;
+    /**
+     * The convert width in pixels.
+     *
+     * @var int
+     */
+    private $width;
 
-	/**
-	 * The convert height in pixels.
-	 *
-	 * @var int
-	 */
-	private $height;
+    /**
+     * The convert height in pixels.
+     *
+     * @var int
+     */
+    private $height;
 
-	/**
-	 * The convert quality.
-	 *
-	 * @var int
-	 */
-	private $quality = 90;
+    /**
+     * The convert quality.
+     *
+     * @var int
+     */
+    private $quality = 90;
 
-	/**
-	 * Create a new Magick instance.
-	 *
-	 * @param	string	$convert_path
-	 * @return	void
-	 */
-	public function __construct($convert_path = 'convert')
-	{
-		$this->convert_path = $convert_path;
-	}
+    /**
+     * Create a new Magick instance.
+     *
+     * @param  string $convert_path
+     * @return void
+     */
+    public function __construct($convert_path = 'convert')
+    {
+        $this->convert_path = $convert_path;
+    }
 
-	/**
-	 * Set the convert command path.
-	 *
-	 * @param	string	$convert_path
-	 * @return	Magick
-	 */
-	public function set_convert_path($convert_path)
-	{
-		$this->convert_path = $convert_path;
-		return $this;
-	}
+    /**
+     * Set the convert command path.
+     *
+     * @param  string $convert_path
+     * @return Magick
+     */
+    public function setConvertPath($convert_path)
+    {
+        $this->convert_path = $convert_path;
 
-	/**
-	 * Set the source image path.
-	 *
-	 * @param	string	$file_path
-	 * @return	Magick
-	 */
-	public function set_file_path($file_path)
-	{
-		$this->file_path = $file_path;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set the convert cropping by ratio with optional gravity parameter.
-	 *
-	 * <code>
-	 *		$image->set_crop(16/9);
-	 * </code>
-	 *
-	 * @param	int		$width
-	 * @param	string	$gravity
-	 * @return	Magick
-	 */
-	public function set_crop_by_ratio($ratio, $gravity = 'center')
-	{
-		// Get original image size
-		$size = getimagesize($this->file_path);
+    /**
+     * Set the source image path.
+     *
+     * @param  string $file_path
+     * @return Magick
+     */
+    public function setFilePath($file_path)
+    {
+        $this->file_path = $file_path;
 
-		// Set dimensions
-		$width = $size[0];
-		$height = $width / $ratio;
+        return $this;
+    }
 
-		// Update dimensions if out of document bounds
-		if ($height > $size[1])
-		{
-			$width = $size[1] * $ratio;
-			$height = $size[1];
-		}
+    /**
+     * Set the convert cropping by ratio with optional gravity parameter.
+     *
+     * <code>
+     *      $image->set_crop(16/9);
+     * </code>
+     *
+     * @param  int    $width
+     * @param  string $gravity
+     * @return Magick
+     */
+    public function setCropByRatio($ratio, $gravity = 'center')
+    {
+        // Get original image size
+        $size = getimagesize($this->file_path);
 
-		// Build crop command
-		$this->crop = ' -gravity ' . $gravity . ' -extent ' . $width . 'x' . $height;
+        // Set dimensions
+        $width = $size[0];
+        $height = $width / $ratio;
 
-		return $this;
-	}
+        // Update dimensions if out of document bounds
+        if ($height > $size[1]) {
+            $width = $size[1] * $ratio;
+            $height = $size[1];
+        }
 
-	/**
-	 * Set the convert cropping by coordinates.
-	 *
-	 * @param	int		$width
-	 * @param	int		$height
-	 * @param	int		$x_pos
-	 * @param	int		$y_pos
-	 * @return	Magick
-	 */
-	public function set_crop_by_coordinates($width, $height, $x_pos, $y_pos)
-	{
-		$this->crop = ' -crop ' . $width . 'x' . $height . '+' . $x_pos . '+' . $y_pos;
-		return $this;
-	}
+        // Build crop command
+        $this->crop = ' -gravity ' . $gravity . ' -extent ' . $width . 'x' . $height;
 
-	/**
-	 * Set the convert width in pixels.
-	 *
-	 * @param	int		$width
-	 * @return	Magick
-	 */
-	public function set_width($width)
-	{
-		$this->width = $width;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set the convert height in pixels.
-	 *
-	 * @param	int		$height
-	 * @return	Magick
-	 */
-	public function set_height($height)
-	{
-		$this->height = $height;
-		return $this;
-	}
+    /**
+     * Set the convert cropping by coordinates.
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  int    $x_pos
+     * @param  int    $y_pos
+     * @return Magick
+     */
+    public function setCropByCoordinates($width, $height, $x_pos, $y_pos)
+    {
+        $this->crop = ' -crop ' . $width . 'x' . $height . '+' . $x_pos . '+' . $y_pos;
 
-	/**
-	 * Set the convert quality.
-	 *
-	 * @param	int		$quality
-	 * @return	Magick
-	 */
-	public function set_quality($quality)
-	{
-		$this->quality = $quality;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Generate a new image by executing the convert command.
-	 *
-	 * @param	string	$dest_path
-	 * @return	bool
-	 */
-	public function convert($dest_path)
-	{
-		// Has convert path been set?
-		if (is_null($this->convert_path))
-		{
-			return false;
-		}
+    /**
+     * Set the convert width in pixels.
+     *
+     * @param  int    $width
+     * @return Magick
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
 
-		// Does the file exist?
-		if (!is_file($this->file_path))
-		{
-			return false;
-		}
+        return $this;
+    }
 
-		// Run command
-		exec($this->command($dest_path));
+    /**
+     * Set the convert height in pixels.
+     *
+     * @param  int    $height
+     * @return Magick
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
 
-		// Return success
-		return is_file($dest_path);
-	}
+        return $this;
+    }
 
-	/**
-	 * Build the convert command using the current object parameters.
-	 *
-	 * @param	string	$dest_path
-	 * @return	string
-	 */
-	private function command($dest_path)
-	{
-		// Convert command
-		$command = $this->convert_path;
+    /**
+     * Set the convert quality.
+     *
+     * @param  int    $quality
+     * @return Magick
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
 
-		// Source path
-		$command .= ' ' . $this->file_path;
+        return $this;
+    }
 
-		// Crop
-		if (!is_null($this->crop))
-		{
-			$command .= $this->crop;
-		}
+    /**
+     * Generate a new image by executing the convert command.
+     *
+     * @param  string $dest_path
+     * @return bool
+     */
+    public function convert($dest_path)
+    {
+        // Has convert path been set?
+        if (is_null($this->convert_path)) {
+            return false;
+        }
 
-		// Resize
-		if (!is_null($this->width) and !is_null($this->height))
-		{
-			$command .= ' -resize ' . $this->width . 'x' . $this->height;
-		}
-		else if (!is_null($this->width) and is_null($this->height))
-		{
-			$command .= ' -resize ' . $this->width;
-		}
-		else if (is_null($this->width) and !is_null($this->height))
-		{
-			$command .= ' -resize x' . $this->height;
-		}
+        // Does the file exist?
+        if (!is_file($this->file_path)) {
+            return false;
+        }
 
-		// Auto-rotate and flatten
-		$command .= ' -background white -flatten -auto-orient';
+        // Run command
+        exec($this->command($dest_path));
 
-		// Image quality
-		$command .= ' -quality ' . $this->quality;
+        // Return success
+        return is_file($dest_path);
+    }
 
-		// Destination path
-		$command .= ' ' . $dest_path;
+    /**
+     * Build the convert command using the current object parameters.
+     *
+     * @param  string $dest_path
+     * @return string
+     */
+    private function command($dest_path)
+    {
+        // Convert command
+        $command = $this->convert_path;
 
-		// Return command
-		return $command;
-	}
+        // Source path
+        $command .= ' ' . $this->file_path;
+
+        // Crop
+        if (!is_null($this->crop)) {
+            $command .= $this->crop;
+        }
+
+        // Resize
+        if (!is_null($this->width) and !is_null($this->height)) {
+            $command .= ' -resize ' . $this->width . 'x' . $this->height;
+        } elseif (!is_null($this->width) and is_null($this->height)) {
+            $command .= ' -resize ' . $this->width;
+        } elseif (is_null($this->width) and !is_null($this->height)) {
+            $command .= ' -resize x' . $this->height;
+        }
+
+        // Auto-rotate and flatten
+        $command .= ' -background white -flatten -auto-orient';
+
+        // Image quality
+        $command .= ' -quality ' . $this->quality;
+
+        // Destination path
+        $command .= ' ' . $dest_path;
+
+        // Return command
+        return $command;
+    }
 }
