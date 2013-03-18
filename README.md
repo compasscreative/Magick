@@ -26,29 +26,29 @@ The following example shows how you can use `Magick` to create five different im
 	$magick = new Magick();
 
 	// Set the path to the file you want to modify
-	$magick->set_file_path('original.jpg');
+	$magick->setFilePath('original.jpg');
 
 	// Create an extra large version
 	// Restricted to a maximum of 1200px high
-	$magick->set_height(1200)->convert('xlarge.jpg');
+	$magick->setHeight(1200)->convert('xlarge.jpg');
 
 	// Create a large version
 	// Set a specific cropping ratio
 	// Set height to null (to clear the 1200px restriction)
 	// Add new width restriction of 1175px wide
-	$magick->set_crop_by_ratio(1175/660)->set_height(null)->set_width(1175)->convert('large.jpg');
+	$magick->setCropByRatio(1175/660)->setHeight(null)->setWidth(1175)->convert('large.jpg');
 
 	// Create a medium version
 	// Adjust the crop ratio
 	// Set a smaller width restriction of 750px
-	$magick->set_crop_by_ratio(750/500)->set_width(750)->convert('medium.jpg');
+	$magick->setCropByRatio(750/500)->setWidth(750)->convert('medium.jpg');
 
 	// Create a small version
 	// Set a smaller width restriction of 250px
-	$magick->set_width(250)->convert('small.jpg');
+	$magick->setWidth(250)->convert('small.jpg');
 
 	// Create an extra small version
 	// Set the crop ratio as a square
 	// Set a small width restriction of 75px
-	$magick->set_crop_by_ratio(1)->set_width(75)->convert('xsmall.jpg');
+	$magick->setCropByRatio(1)->setWidth(75)->convert('xsmall.jpg');
 ```
