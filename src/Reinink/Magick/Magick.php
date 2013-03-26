@@ -1,12 +1,4 @@
 <?php
-/**
- * An ultra lightweight ImageMagick wrapper for PHP.
- *
- * @package  Magick
- * @version  2.0
- * @author   Jonathan Reinink <jonathan@reininks.com>
- * @link     https://github.com/reinink/Magick
- */
 
 namespace Reinink\Magick;
 
