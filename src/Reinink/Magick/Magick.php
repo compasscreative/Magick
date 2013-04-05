@@ -96,6 +96,12 @@ class Magick
      */
     public function setCropByRatio($ratio, $gravity = 'center')
     {
+        // Disable cropping
+        if (is_null($ratio)) {
+            $this->crop = null;
+            return $this;
+        }
+
         // Get original image size
         $size = getimagesize($this->file_path);
 
@@ -206,6 +212,9 @@ class Magick
         // Convert command
         $command = $this->convert_path;
 
+        // Auto-rotate and flatten
+        $command .= ' -background white -flatten -auto-orient';
+
         // Source path
         $command .= ' ' . $this->file_path;
 
@@ -222,9 +231,6 @@ class Magick
         } elseif (is_null($this->width) and !is_null($this->height)) {
             $command .= ' -resize x' . $this->height;
         }
-
-        // Auto-rotate and flatten
-        $command .= ' -background white -flatten -auto-orient';
 
         // Image quality
         $command .= ' -quality ' . $this->quality;
