@@ -1,7 +1,7 @@
 {
 	"name": "reinink/magick",
     "description": "An ultra lightweight ImageMagick wrapper for PHP.",
-    "version": "1.0.0",
+    "version": "1.0.1",
 	"autoload":
 	{
 		"psr-0":
