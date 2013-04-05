@@ -96,12 +96,6 @@ class Magick
      */
     public function setCropByRatio($ratio, $gravity = 'center')
     {
-        // Disable cropping
-        if (is_null($ratio)) {
-            $this->crop = null;
-            return $this;
-        }
-
         // Get original image size
         $size = getimagesize($this->file_path);
 
@@ -133,6 +127,18 @@ class Magick
     public function setCropByCoordinates($width, $height, $x_pos, $y_pos)
     {
         $this->crop = ' -crop ' . $width . 'x' . $height . '+' . $x_pos . '+' . $y_pos;
+
+        return $this;
+    }
+
+    /**
+     * Disable cropping.
+     *
+     * @return Magick
+     */
+    public function disableCrop()
+    {
+        $this->crop = null;
 
         return $this;
     }
